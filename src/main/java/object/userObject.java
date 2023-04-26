@@ -4,7 +4,7 @@ public class userObject {
 	
 	private Long id;
 	private String firstName;
-	private String lastName;//
+	private String lastName;
 	private String email;
 	private String cell;
 	private String password;

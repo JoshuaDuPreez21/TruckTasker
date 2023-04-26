@@ -149,7 +149,7 @@ public class jobCardObject {
 		this.costCode = costCode;
 	}
 	public String getClient() {
-		return client;//
+		return client;
 	}
 	public void setClient(String client) {
 		this.client = client;

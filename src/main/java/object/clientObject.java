@@ -3,7 +3,7 @@ package object;
 public class clientObject {
 	
 	private Long id;
-	private String name;//
+	private String name;
 	private String location;
 	private String cell;
 	private String fax;
