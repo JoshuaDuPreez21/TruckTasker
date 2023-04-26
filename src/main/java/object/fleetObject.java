@@ -4,7 +4,7 @@ public class fleetObject {
 
 	private Long id;
 	private String alias;
-	private String reg;
+	private String reg;//
 	private String make;
 	private String model;
 	private String year;
