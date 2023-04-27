@@ -77,7 +77,7 @@ public class clientService {
 		
 		generatedTime = helper.getCurrentDateTime();
 		
-		String[] columns = helper.saveClient();
+		String[] columns = helper.saveClient(1);
 		Object[] values = {name,latitude,longitude,cellNumber,fax,email,registrationNumber,vatRegistrationNumber,postalAddress,generatedTime};
 		
 		Boolean saveClient = TTDAO.saveData("client", columns, values);
@@ -154,7 +154,7 @@ public class clientService {
 		
 		generatedTime = helper.getCurrentDateTime();
 		
-		String[] columns = helper.saveClient();
+		String[] columns = helper.saveClient(2);
 		Object[] values = {name,latitude,longitude,cellNumber,fax,email,registrationNumber,vatRegistrationNumber,postalAddress,generatedTime};
 		String[] whereColumnNames = {"id"};
 		Object[] whereValues = {1};
