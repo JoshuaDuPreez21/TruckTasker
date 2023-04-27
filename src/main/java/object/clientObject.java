@@ -10,8 +10,8 @@ public class clientObject {
 	private String email;
 	private String regNumber;
 	private String vatNumber;
-	private String createdTime;
-	private String updatedTime;
+	private String generatedTime;
+	private String editedTime;
 	
 	
 	public Long getId() {
@@ -62,17 +62,17 @@ public class clientObject {
 	public void setVatNumber(String vatNumber) {
 		this.vatNumber = vatNumber;
 	}
-	public String getCreatedTime() {
-		return createdTime;
+	public String getGeneratedTime() {
+		return generatedTime;
 	}
-	public void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	public void setGeneratedTime(String generatedTime) {
+		this.generatedTime = generatedTime;
 	}
-	public String getUpdatedTime() {
-		return updatedTime;
+	public String getEditedTime() {
+		return editedTime;
 	}
-	public void setUpdatedTime(String updatedTime) {
-		this.updatedTime = updatedTime;
+	public void setEditedTime(String editedTime) {
+		this.editedTime = editedTime;
 	}
 	
 	

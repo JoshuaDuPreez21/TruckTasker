@@ -9,10 +9,8 @@ public class userObject {
 	private String cell;
 	private String password;
 	private String role;
-	private String createdTime;
-	private String updatedTime;
-	
-	
+	private String generatedTime;
+	private String editedTime;
 	
 	public Long getId() {
 		return id;
@@ -56,17 +54,17 @@ public class userObject {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public String getCreatedTime() {
-		return createdTime;
+	public String getGeneratedTime() {
+		return generatedTime;
 	}
-	public void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	public void setGeneratedTime(String generatedTime) {
+		this.generatedTime = generatedTime;
 	}
-	public String getUpdatedTime() {
-		return updatedTime;
+	public String getEditedTime() {
+		return editedTime;
 	}
-	public void setUpdatedTime(String updatedTime) {
-		this.updatedTime = updatedTime;
+	public void setEditedTime(String editedTime) {
+		this.editedTime = editedTime;
 	}
 		
 	

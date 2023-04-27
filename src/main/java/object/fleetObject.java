@@ -10,8 +10,8 @@ public class fleetObject {
 	private String year;
 	private String vin;
 	private String engineNumber;
-	private String createdTime;
-	private String updatedTime;
+	private String generatedTime;
+	private String editedTime;
 	
 	
 	public Long getId() {
@@ -62,17 +62,17 @@ public class fleetObject {
 	public void setEngineNumber(String engineNumber) {
 		this.engineNumber = engineNumber;
 	}
-	public String getCreatedTime() {
-		return createdTime;
+	public String getGeneratedTime() {
+		return generatedTime;
 	}
-	public void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	public void setGeneratedTime(String generatedTime) {
+		this.generatedTime = generatedTime;
 	}
-	public String getUpdatedTime() {
-		return updatedTime;
+	public String getEditedTime() {
+		return editedTime;
 	}
-	public void setUpdatedTime(String updatedTime) {
-		this.updatedTime = updatedTime;
+	public void setEditedTime(String editedTime) {
+		this.editedTime = editedTime;
 	}
 	
 	

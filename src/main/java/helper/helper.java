@@ -27,18 +27,31 @@ public class helper {
 		return columns;
 	}
 	
-	
-	
-	
-	public static String[] saveClient() {
+	public static String[] saveClient(int type) {
+		String[] columns = null;
 		
-		String[] columns = new String[] {"name", "latitude", "longitude","cellNumber", "fax", "email","registrationNumber", "vatRegistrationNumber", "postalAddress", "generatedTime"};
+		if(type == 1) { 
+			columns = new String[] {"name", "latitude", "longitude","cellNumber", "fax", "email","registrationNumber", "vatRegistrationNumber", "postalAddress", "generatedTime"};
+		} else if(type == 2) {
+			columns = new String[] {"name", "latitude", "longitude","cellNumber", "fax", "email","registrationNumber", "vatRegistrationNumber", "postalAddress", "editedTime"};
+		} else {
+			columns = new String[] {"id"}; 
+		}
+		 
 		return columns;
 	}
 	
-	public static String[] saveFleet() {
+	public static String[] saveFleet(int type) {
+		String[] columns = null;
 		
-		String[] columns = new String[] {"alias", "reg", "model", "year", "vin", "frontTrailerReg", "rearTrailerReg", "generatedTime"};
+		if(type == 1) {
+			columns = new String[] {"alias", "reg", "model", "year", "vin", "frontTrailerReg", "rearTrailerReg", "generatedTime"};
+		} else if(type == 2) {
+			columns = new String[] {"alias", "reg", "model", "year", "vin", "frontTrailerReg", "rearTrailerReg", "editedTime"};
+		} else {
+			columns = new String[] {"id"};
+		}
+
 		return columns;
 	}
 	
@@ -48,33 +61,17 @@ public class helper {
 		return columns;
 	}
 	
-	public static String[] saveJobCard() {
+	public static String[] saveJobCard(int type) {
+		String[] columns = null;
 		
-		String[] columns = new String[] {"idFleet", "idClient", "idAdmin", "idTechnician", "siteName", "siteLatitude", "siteLongitude", "description", "estimatedTime", "startTime", "endTime", "hourlyRate", "totalCost", "jobStatus", "travelTime", "waitingTime", "travelKm", "orderNumber", "costCode", "generatedTime"};
-		return columns;
-	}
-	
-	public static String[] updateUser() {
-		
-		String[] columns = new String[] {"name", "surname", "email", "cellNumber", "password", "role", "editedTime"};
-		return columns;
-	}
-	
-	public static String[] updateClient() {
-		
-		String[] columns = new String[] {"name", "latitude", "longitude","cellNumber", "fax", "email","registrationNumber", "vatRegistrationNumber", "postalAddress", "editedTime"};
-		return columns;
-	}
-	
-	public static String[] updateFleet() {
-		
-		String[] columns = new String[] {"alias", "reg", "model", "year", "vin", "frontTrailerReg", "rearTrailerReg", "editedTime"};
-		return columns;
-	}
-	
-	public static String[] updateJobCard() {
-		
-		String[] columns = new String[] {"idFleet", "idClient", "idAdmin", "idTechnician", "siteName", "siteLatitude", "siteLongitude", "description", "estimatedTime", "startTime", "endTime", "hourlyRate", "totalCost", "jobStatus", "travelTime", "waitingTime", "travelKm", "orderNumber", "costCode", "editedTime"};
+		if(type == 1) {
+			columns = new String[] {"idFleet", "idClient", "idAdmin", "idTechnician", "siteName", "siteLatitude", "siteLongitude", "description", "estimatedTime", "startTime", "endTime", "hourlyRate", "totalCost", "jobStatus", "travelTime", "waitingTime", "travelKm", "orderNumber", "costCode", "generatedTime"};
+		} else if(type == 2) {
+			columns = new String[] {"idFleet", "idClient", "idAdmin", "idTechnician", "siteName", "siteLatitude", "siteLongitude", "description", "estimatedTime", "startTime", "endTime", "hourlyRate", "totalCost", "jobStatus", "travelTime", "waitingTime", "travelKm", "orderNumber", "costCode", "editedTime"};
+		} else {
+			columns = new String[] {"id"};
+		}
+ 
 		return columns;
 	}
 }
