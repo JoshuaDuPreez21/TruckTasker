@@ -24,8 +24,8 @@ public class jobCardObject {
 	private String costCode;
 	private String client;
 	private Long idClient;
-	private String createdTime;
-	private String updatedTime;
+	private String generatedTime;
+	private String editedTime;
 	
 	
 	public Long getId() {
@@ -160,17 +160,17 @@ public class jobCardObject {
 	public void setIdClient(Long idClient) {
 		this.idClient = idClient;
 	}
-	public String getCreatedTime() {
-		return createdTime;
+	public String getGeneratedTime() {
+		return generatedTime;
 	}
-	public void setCreatedTime(String createdTime) {
-		this.createdTime = createdTime;
+	public void setGeneratedTime(String generatedTime) {
+		this.generatedTime = generatedTime;
 	}
-	public String getUpdatedTime() {
-		return updatedTime;
+	public String getEditedTime() {
+		return editedTime;
 	}
-	public void setUpdatedTime(String updatedTime) {
-		this.updatedTime = updatedTime;
+	public void setEditedTime(String editedTime) {
+		this.editedTime = editedTime;
 	}
 	
 	
