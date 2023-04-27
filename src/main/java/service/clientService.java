@@ -157,12 +157,12 @@ public class clientService {
 		String[] columns = helper.saveClient(2);
 		Object[] values = {name,latitude,longitude,cellNumber,fax,email,registrationNumber,vatRegistrationNumber,postalAddress,generatedTime};
 		String[] whereColumnNames = {"id"};
-		Object[] whereValues = {1};
+		Object[] whereValues = {id};
 		
 		Boolean saveClient = TTDAO.updateData("client", columns, values, whereColumnNames, whereValues);
 		if(!saveClient) {
 			errorObject.put("errorCode", "-2");
-			errorObject.put("message", "Failed to update client.Please contact IT support!");
+			errorObject.put("message", "Failed to update client. Please contact IT support!");
 			return Response.status(200).entity(errorObject.toString()).build(); 
 		}
 		
