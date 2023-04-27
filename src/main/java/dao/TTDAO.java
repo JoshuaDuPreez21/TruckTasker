@@ -190,7 +190,7 @@ public class TTDAO<T extends clientObject> {
         return dataList;
     }
     
-    public static Object[] getDataById(String tableName, int id) {
+    public static Object[] getDataById(String tableName, Long id) {
         Object[] data = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -199,7 +199,7 @@ public class TTDAO<T extends clientObject> {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
             String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int columnCount = resultSet.getMetaData().getColumnCount();
