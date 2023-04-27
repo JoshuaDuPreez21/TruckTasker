@@ -1,8 +1,5 @@
 package service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +11,6 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
-import object.userObject;
 import helper.helper;
 import dao.TTDAO;
 
@@ -55,45 +51,26 @@ public class userService {
 		String fieldName = "email";
 		Object fieldValue = email;
 		Object[][] data = TTDAO.getDataByField(table, fieldName, fieldValue);
-		List<userObject> user = null;
 		if (data != null) {
 		    for (Object[] row : data) {
-		        Object userObject = row;
-		        System.out.println(userObject);
+		        Object userObject[] = row;
+		        
+		        if(userObject != null) {
+		        	String userPassword = password;
+					String savedPassword = (String) userObject[5];
+					
+					if(!userPassword.equals(savedPassword)) { // HASH passwords later
+						errorObject.put("errorCode", "-4");
+						errorObject.put("message", "Incorrect Password. Please contact your Admin!");
+					
+						return Response.status(200).entity(errorObject.toString()).build(); 
+					}
+				}
 		        
 		    }
 		} else {
 			errorObject.put("errorCode", "-5");
 			errorObject.put("message", "Invalid Email Address. Please try again or contact your Admin!");
-		
-			return Response.status(200).entity(errorObject.toString()).build(); 
-		}
-		
-		
-		
-		
-		if(user != null && user.size() > 0) {
-			userObject userData = user.get(0);
-			if(userData != null) {
-				
-				String userPassword = password;
-				String savedPassword = userData.getPassword();
-				
-				if(!userPassword.equals(savedPassword)) { // HASH passwords later
-					errorObject.put("errorCode", "-4");
-					errorObject.put("message", "Incorrect Password. Please contact your Admin!");
-				
-					return Response.status(200).entity(errorObject.toString()).build(); 
-				}else {
-					
-					 jsonObject = new JSONObject();
-					 jsonObject.put("data", userData);
-				}
-				
-			}
-		}else {
-			errorObject.put("errorCode", "-3");
-			errorObject.put("message", "User not does exist. Please contact your Admin!");
 		
 			return Response.status(200).entity(errorObject.toString()).build(); 
 		}
