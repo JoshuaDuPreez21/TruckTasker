@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import object.clientObject;
 
@@ -14,7 +18,7 @@ public class TTDAO<T extends clientObject> {
  
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/trucktasker";
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "tristan";
+    private static final String DATABASE_PASSWORD = "adminadmin";
     
     public static boolean saveData(String tableName, String[] columnNames, Object[] values) {
         boolean success = false;
@@ -152,8 +156,8 @@ public class TTDAO<T extends clientObject> {
         return success;
     }
     
-    public static List<Object[]> getAllData(String tableName) {
-        List<Object[]> dataList = new ArrayList<>();
+    public static JSONArray getAllData(String tableName) {
+        JSONArray jsonArray = new JSONArray();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -168,7 +172,7 @@ public class TTDAO<T extends clientObject> {
                 for (int i = 1; i <= columnCount; i++) {
                     data[i - 1] = resultSet.getObject(i);
                 }
-                dataList.add(data);
+                jsonArray.put(data);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +191,7 @@ public class TTDAO<T extends clientObject> {
                 e.printStackTrace();
             }
         }
-        return dataList;
+        return jsonArray;
     }
     
     public static Object[] getDataById(String tableName, Long id) {
@@ -228,96 +232,39 @@ public class TTDAO<T extends clientObject> {
         return data;
     }
     
-    public static Object[][] getDataByField(String tableName, String fieldName, Object fieldValue) {
-        Object[][] data = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
-            String sql = "SELECT * FROM " + tableName + " WHERE " + fieldName + " = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, fieldValue);
-            resultSet = statement.executeQuery();
-            if (resultSet.last()) {
-                int rowCount = resultSet.getRow();
-                int columnCount = resultSet.getMetaData().getColumnCount();
-                data = new Object[rowCount][columnCount];
-                resultSet.beforeFirst();
-                int i = 0;
-                while (resultSet.next()) {
-                    for (int j = 1; j <= columnCount; j++) {
-                        data[i][j - 1] = resultSet.getObject(j);
-                    }
-                    i++;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return data;
-    }
     
-    public static Object[][] executeQuery(String query, Object[] params) {
-        Object[][] data = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
-            statement = connection.prepareStatement(query);
-            if (params != null) {
-                for (int i = 0; i < params.length; i++) {
-                    statement.setObject(i + 1, params[i]);
-                }
-            }
-            resultSet = statement.executeQuery();
-            if (resultSet.last()) {
-                int rowCount = resultSet.getRow();
-                int columnCount = resultSet.getMetaData().getColumnCount();
-                data = new Object[rowCount][columnCount];
-                resultSet.beforeFirst();
-                int i = 0;
-                while (resultSet.next()) {
-                    for (int j = 1; j <= columnCount; j++) {
-                        data[i][j - 1] = resultSet.getObject(j);
-                    }
-                    i++;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return data;
-    }
-}
+    public static JSONArray customQueryJobCard(String tableName, String query) {
+        
+    	JSONArray jsonArray = new JSONArray();
+    	try{
+    		Connection conn;
+    		conn = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
+    		Statement st = conn.createStatement();
+    	    ResultSet rs = st.executeQuery(query);
+    	      
+    	    while (rs.next())
+    	    { // USE STATIC BUILD JSONOBJECT HERE
+    	        Long id = rs.getLong("id");
+    	        String siteName = rs.getString("siteName");
+    	        String description = rs.getString("description");
+    	        
+    	        System.out.println(id + "  "+ siteName + "  "+ description);
+    	        
+    	        
+    	        JSONObject jsonObject = new JSONObject();
+    	        jsonArray.put(jsonObject);
+    	        
+    	     }
+    	     st.close();
+    	    }catch (Exception e){
+    	      System.err.println("Got an exception! ");
+    	      System.err.println(e.getMessage());
+    	    }
+			return jsonArray;
+    	}
+    
+    
+    
+	}
 
 

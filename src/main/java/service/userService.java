@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import helper.helper;
@@ -50,24 +51,19 @@ public class userService {
 		
 		String fieldName = "email";
 		Object fieldValue = email;
-		Object[][] data = TTDAO.getDataByField(table, fieldName, fieldValue);
+		JSONArray data = null;//TTDAO.getDataByField(table, fieldName, fieldValue);
 		if (data != null) {
-		    for (Object[] row : data) {
-		        Object userObject[] = row;
-		        
-		        if(userObject != null) {
-		        	String userPassword = password;
-					String savedPassword = (String) userObject[5];
-					
-					if(!userPassword.equals(savedPassword)) { // HASH passwords later
-						errorObject.put("errorCode", "-4");
-						errorObject.put("message", "Incorrect Password. Please contact your Admin!");
-					
-						return Response.status(200).entity(errorObject.toString()).build(); 
-					}
-				}
-		        
-		    }
+			String userPassword = password;
+			//String savedPassword = (String) userObject[5];
+			
+//			if(!userPassword.equals(savedPassword)) { // HASH passwords later
+//				errorObject.put("errorCode", "-4");
+//				errorObject.put("message", "Incorrect Password. Please contact your Admin!");
+//			
+//				return Response.status(200).entity(errorObject.toString()).build(); 
+//			}else {
+//				jsonObject.put("id", (Long) userObject[0]);
+//			}
 		} else {
 			errorObject.put("errorCode", "-5");
 			errorObject.put("message", "Invalid Email Address. Please try again or contact your Admin!");
@@ -289,13 +285,7 @@ public class userService {
 	public Boolean validEmail(String email) {
 		Boolean isValid = true;
 		
-		Object[][] data = TTDAO.getDataByField(table, "email", email);
-		if (data != null) {
-		    for (Object[] row : data) {
-		    	isValid = false;
-		        break;
-		    }
-		}
+		
 		
 		return isValid;
 	}
@@ -303,13 +293,7 @@ public class userService {
 	public Boolean validCell(String cell) {
 		Boolean isValid = true;
 		
-		Object[][] data = TTDAO.getDataByField(table, "cell", cell);
-		if (data != null) {
-		    for (Object[] row : data) {
-		    	isValid = false;
-		        break;
-		    }
-		}
+		
 		
 		return isValid;
 	}
