@@ -47,23 +47,23 @@ public class userService {
 		}
 	
 		
-		//find user by field
-		
-		String fieldName = "email";
 		Object fieldValue = email;
-		JSONArray data = null;//TTDAO.getDataByField(table, fieldName, fieldValue);
+		String uQuery = "Select * from user where email = '"+fieldValue+"';";
+		JSONArray data = TTDAO.customQueryUser("user", uQuery);
 		if (data != null) {
 			String userPassword = password;
-			//String savedPassword = (String) userObject[5];
+			JSONObject uObject = data.getJSONObject(0);
+			String savedPassword = uObject.getString("password");
 			
-//			if(!userPassword.equals(savedPassword)) { // HASH passwords later
-//				errorObject.put("errorCode", "-4");
-//				errorObject.put("message", "Incorrect Password. Please contact your Admin!");
-//			
-//				return Response.status(200).entity(errorObject.toString()).build(); 
-//			}else {
-//				jsonObject.put("id", (Long) userObject[0]);
-//			}
+			if(!userPassword.equals(savedPassword)) { // HASH passwords later
+				errorObject.put("errorCode", "-4");
+				errorObject.put("message", "Incorrect Password. Please contact your Admin!");
+			
+				return Response.status(200).entity(errorObject.toString()).build(); 
+			}else {
+				jsonObject = new JSONObject();
+				jsonObject.put("data",uObject);
+			}
 		} else {
 			errorObject.put("errorCode", "-5");
 			errorObject.put("message", "Invalid Email Address. Please try again or contact your Admin!");
@@ -110,10 +110,10 @@ public class userService {
 		if(jsonObject.has("password") && !jsonObject.isNull("password")) {
 			password = jsonObject.getString("password");
 		}
+		
 		if(jsonObject.has("role") && !jsonObject.isNull("role")) {
 			role = jsonObject.getString("role");
 		}
-		
 		
 		
 		if(name == null || surname == null || email == null || cellNumber == null || password == null || role == null) {
@@ -210,10 +210,6 @@ public class userService {
 		
 		}
 		
-		//check duplicate email + cell when updating
-		
-		// 1. find user by id 
-		
 		Object[] userObject = TTDAO.getDataById(table, id);
 		String originalEmail = null;
 		if(userObject != null) {
@@ -227,9 +223,14 @@ public class userService {
 		}
 		
 		if(changedEmail) {
-			// 2.serach if any other user has this email
-			// 3. if found then return code
-			
+			String query = "Select * from user where email = '"+email+"';";
+			JSONArray jsonArray = TTDAO.customQueryUser("user", query);
+			if(jsonArray != null && jsonArray.length() > 0) {
+				errorObject.put("errorCode", "-4");
+				errorObject.put("message", "This email is not available!");
+				
+				return Response.status(200).entity(errorObject.toString()).build(); 
+			}
 			
 		}
 		
@@ -285,6 +286,11 @@ public class userService {
 	public Boolean validEmail(String email) {
 		Boolean isValid = true;
 		
+		String query = "Select * from user where email = '"+email+"';";
+		JSONArray jsonArray = TTDAO.customQueryUser("user", query);
+		if(jsonArray != null && jsonArray.length() > 0) {
+			isValid = false;
+		}
 		
 		
 		return isValid;
@@ -293,7 +299,11 @@ public class userService {
 	public Boolean validCell(String cell) {
 		Boolean isValid = true;
 		
-		
+		String query = "Select * from user where cellNumber = '"+cell+"';";
+		JSONArray jsonArray = TTDAO.customQueryUser("user", query);
+		if(jsonArray != null && jsonArray.length() > 0) {
+			isValid = false;
+		}
 		
 		return isValid;
 	}

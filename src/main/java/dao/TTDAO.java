@@ -243,28 +243,109 @@ public class TTDAO<T extends clientObject> {
     	    ResultSet rs = st.executeQuery(query);
     	      
     	    while (rs.next())
-    	    { // USE STATIC BUILD JSONOBJECT HERE
-    	        Long id = rs.getLong("id");
-    	        String siteName = rs.getString("siteName");
-    	        String description = rs.getString("description");
-    	        
-    	        System.out.println(id + "  "+ siteName + "  "+ description);
-    	        
-    	        
-    	        JSONObject jsonObject = new JSONObject();
+    	    { 	
+    	    	JSONObject jsonObject = buildJobCard(rs);
     	        jsonArray.put(jsonObject);
-    	        
-    	     }
+    	    }
     	     st.close();
     	    }catch (Exception e){
     	      System.err.println("Got an exception! ");
     	      System.err.println(e.getMessage());
     	    }
 			return jsonArray;
-    	}
+       }
     
     
+    public static JSONObject buildJobCard(ResultSet rs) {
+    	JSONObject jsonObject = new JSONObject();
+    	
+    	try {
+			Long id = rs.getLong("id");
+			Long idFleet = rs.getLong("idFleet");
+			Long idClient = rs.getLong("idClient");
+			Long idAdmin = rs.getLong("idAdmin");
+			Long idTechnician = rs.getLong("idTechnician");
+			String siteName = rs.getString("siteName");
+			String siteLatitiude = rs.getString("siteLatitiude");
+			String siteLongitude = rs.getString("siteLongitude");
+	        String description = rs.getString("description");
+	        String startTime = rs.getString("startTime");
+	        String estimatedTime = rs.getString("estimatedTime");
+	        String endTime = rs.getString("endTime");
+	        String hourlyRate = rs.getString("hourlyRate");
+	        String totalCost = rs.getString("totalCost");
+	        String jobStatus = rs.getString("jobStatus");
+	        String travelTime = rs.getString("travelTime");
+	        String waitingTime = rs.getString("waitingTime");
+	        String travelKm = rs.getString("travelKm");
+	        String orderNumber = rs.getString("orderNumber");
+	        String costCode = rs.getString("costCode");
+	        String generatedTime = rs.getString("generatedTime");
+	        String editedTime = rs.getString("editedTime");
+	        
+	        jsonObject.put("id", id);
+	        jsonObject.put("idFleet", idFleet);
+	        jsonObject.put("idClient", idClient);
+	        jsonObject.put("idAdmin", idAdmin);
+	        jsonObject.put("idTechnician", idTechnician);
+	        jsonObject.put("siteName", siteName);
+	        jsonObject.put("siteLatitiude", siteLatitiude);
+	        jsonObject.put("siteLongitude", siteLongitude);
+	        jsonObject.put("description", description);
+	        jsonObject.put("startTime", startTime);
+	        jsonObject.put("estimatedTime", estimatedTime);
+	        jsonObject.put("endTime", endTime);
+	        jsonObject.put("hourlyRate", hourlyRate);
+	        jsonObject.put("totalCost", totalCost);
+	        jsonObject.put("jobStatus", jobStatus);
+	        jsonObject.put("travelTime", travelTime);
+	        jsonObject.put("waitingTime", waitingTime);
+	        jsonObject.put("travelKm", travelKm);
+	        jsonObject.put("orderNumber", orderNumber);
+	        jsonObject.put("costCode", costCode);
+	        jsonObject.put("generatedTime", generatedTime);
+	        jsonObject.put("editedTime", editedTime);
+	        
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return jsonObject;
+    }
     
-	}
+    public static JSONArray customQueryUser(String tableName, String query) {
+        
+    	JSONArray jsonArray = new JSONArray();
+    	try{
+    		Connection conn;
+    		conn = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
+    		Statement st = conn.createStatement();
+    	    ResultSet rs = st.executeQuery(query);
+    	      
+    	    while (rs.next())
+    	    { 	// ADD BUILDJSONOBJECT HERE : REFER TO buildJobCard
+    	    	Long id = rs.getLong("id");
+    	    	String password = rs.getString("password");
+    	    	String email = rs.getString("email");
+    	    	String cellNumber = rs.getString("cellNumber");
+    	    	
+    	    	JSONObject jsonObject = new JSONObject();
+    	    	jsonObject.put("id", id);
+    	    	jsonObject.put("email", email);
+    	    	jsonObject.put("password", password);
+    	    	jsonObject.put("cellNumber", cellNumber);
+    	        jsonArray.put(jsonObject);
+    	    }
+    	     st.close();
+    	    }catch (Exception e){
+    	      System.err.println("Got an exception! ");
+    	      System.err.println(e.getMessage());
+    	    }
+			return jsonArray;
+       }
+    
+}
 
 

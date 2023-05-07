@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import dao.TTDAO;
 
@@ -26,12 +27,9 @@ public class jobCardService {
 		String cutsomQuery = "select * from jobcards where idTechnician = "+idTechnician+" and jobStatus <> 'C' order by generatedTime asc";
 		JSONArray jsonArray = TTDAO.customQueryJobCard(table, cutsomQuery);
 		
-		if(jsonArray != null && jsonArray.length() > 0) {
-			for(int i = 0 ; i < jsonArray.length(); i++) {
-				System.out.println("TEST");
-			}
-		}
+		JSONObject toReturn = new JSONObject();
+		toReturn.put("jobs", jsonArray);
 		
-		return null;
+		return Response.status(200).entity(toReturn.toString()).build(); 
 	}
 }
